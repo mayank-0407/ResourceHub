@@ -1,4 +1,4 @@
-# Problem Statement
+# Problem Statement         [![ResourceHub Workflow](https://github.com/mayank-0407/ResourceHub/actions/workflows/django.yml/badge.svg)](https://github.com/mayank-0407/ResourceHub/actions/workflows/django.yml)
 Create a platform for students to publicaly post their needs such as tutoring and resources, and for volunteers to subscribe and offer help volunteers will have profiles with skills and activity recorded. the platform could offer a subscription model with premium features and fees going towards maintenance.
 
 # Process Idealogy
