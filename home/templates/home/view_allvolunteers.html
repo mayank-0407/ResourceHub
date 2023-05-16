@@ -175,7 +175,11 @@
         <div class="cardsLayout">
             <div class="card-container">
                 <div class="card align-items-center ">
-                    <img class="card-image "src="https://bootdey.com/img/Content/avatar/avatar6.png">
+					{% if all_volunteers.pic %}
+						<img class="card-image "src="{{ all_volunteers.pic.url }}">
+					{% else %}
+						<img class="card-image "src="https://bootdey.com/img/Content/avatar/avatar6.png">
+					{% endif %}
                     <h2>{{ all_volunteers.full_name }}</h2>
                     <p class="designation">Skills:-  {{ all_volunteers.skills }}</p>
                     <p class="designation">Experience:-  {{ all_volunteers.experience }}</p>

@@ -51,7 +51,9 @@ def dashboard(request):
         if request.user.is_superuser:
             return redirect('admin')
         try:
-            my_draft=Draft.objects.filter(published=True).values()
+            # my_draft=Draft.objects.filter(published=True).values()
+            my_draft=Draft.objects.all()
+            print(my_draft)
         except:
             print('unable to fetch post')
         try:
@@ -281,6 +283,8 @@ def create_post(request):
             my_title=request.POST.get('title')
             my_subtitle=request.POST.get('subtitle')
             my_description=request.POST.get('description')
+            my_thumbnail=request.FILES.get('thumbnail')
+            print(my_thumbnail)
 
             todays_date = datetime.date.today()  
             try:
@@ -290,7 +294,9 @@ def create_post(request):
                 return redirect('dashboard')
 
             try:
-                Draft.objects.create(user=request.user,title=my_title,subtitle=my_subtitle,description=my_description,pub_date=todays_date,published=True)
+                my_draft=Draft.objects.create(user=request.user,title=my_title,subtitle=my_subtitle,description=my_description,pub_date=todays_date,published=True)
+                my_draft.thumbnail=request.FILES.get('thumbnail')
+                my_draft.save()
                 messages.error(request, 'Draft Created Successfully')
                 return redirect('dashboard')
             except:
@@ -356,7 +362,7 @@ def view_volunteers(request):
             volunteer_type = userType.objects.get(code=settings.USER_VOLUNTEER_CODE)
         except:
             print('Unable to fetch volunteers')
-        all_volunteers = Customer.objects.filter(user_Type=volunteer_type).values()
+        all_volunteers = Customer.objects.filter(user_Type=volunteer_type)
         return render(request,"home/view_allvolunteers.html", context={"volunteer":all_volunteers})   
     return render(request,"home/home.html", context={})   
 
@@ -373,6 +379,7 @@ def view_profile(request):
             new_pass=request.POST.get('new_pass')
             cnew_pass=request.POST.get('cnew_pass')
             check_passchange=request.POST.get('check_pass')
+            profile_pic=request.FILES.get('pic')
 
             verify_email=False   #check to send email
             email=temp_email.lower()
@@ -402,6 +409,8 @@ def view_profile(request):
             profile.college=this_college
             profile.skills=this_skills
             profile.experience=this_experience
+            if profile_pic:
+                profile.pic=request.FILES.get('pic')
             profile.save()
             if verify_email:
                 myuser.is_active=False
@@ -416,12 +425,12 @@ def view_profile(request):
                 profile=Customer.objects.get(user=myuser)
                 try:
                     tempuser=User.objects.get(email=email).username                  
-                    user=authenticate(request,username=tempuser,password=password)
+                    user=authenticate(request,username=tempuser,password=old_pass)
                 except:
                     try:
                         User.objects.get(username=email)
                         
-                        user=authenticate(request,username=email,password=password)
+                        user=authenticate(request,username=email,password=old_pass)
                         
                     except:    
                         messages.error(request, 'Error - Entered Passowrd is incorrect.')
