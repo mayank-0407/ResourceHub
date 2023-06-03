@@ -146,8 +146,8 @@ EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = "#"
-EMAIL_HOST_PASSWORD = "#"
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER_DOT')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD_DOT')
 
 USER_STUDENT_CODE=121
 USER_STUDENT_NAME="student"
@@ -155,6 +155,6 @@ USER_STUDENT_NAME="student"
 USER_VOLUNTEER_CODE=131
 USER_VOLUNTEER_NAME="volunteer"
 
-BASE_URL_EMAIL="http://127.0.0.1:8000"
+BASE_URL_EMAIL="http://20.244.68.116"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # django-insecure-yrg4f=v#$42^bu#rba@v&g&8)d2598y2wf9znu_cm^rc8#cnzm
